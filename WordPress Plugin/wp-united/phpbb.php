@@ -267,7 +267,12 @@ class WPU_Phpbb extends WPU_Context_Switcher {
 			$fStateChanged = $this->foreground();
 			$config['force_server_vars'] = 1;
 			$boardUrl = add_trailing_slash(generate_board_url());
-			$this->url = preg_replace('/(http:\/\/\/|https:\/\/\/)/i', '/', $boardUrl);
+			$pattern = '/(http:\/\/\/|https:\/\/\/)/i';
+			if(preg_match($pattern, $boardUrl)) {
+				$this->url = preg_replace($pattern, '/', $boardUrl);
+			} else {
+				$this->url = $boardUrl;
+			}
 			$this->restore_state($fStateChanged);
 		}
 		
